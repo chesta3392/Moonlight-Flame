@@ -1,0 +1,8 @@
+<h1>Our Candles</h1>
+
+{% for candle in candles %}
+    <h2>{{ candle.name }}</h2>
+    <p>{{ candle.description }}</p>
+    <p>₹{{ candle.price }}</p>
+    <hr>
+{% endfor %}

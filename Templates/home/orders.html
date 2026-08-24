@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders – Moonlight Flame</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9a84c;--gold-light:#e8d5a3;
+  --dark:#0d0d0d;--dark2:#1a1a1a;--dark3:#242424;
+  --cream:#f5f0e8;
+  --red:#b91c1c;
+  --text-light:#d4c9b8;--text-muted:#8a7f72;
+  --green:#4ade80;
+  --purple:#7c3aed;
+}
+body{font-family:'Jost',sans-serif;background:var(--dark);color:var(--cream);min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--dark2)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);transition:color 0.3s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-logout{background:none;border:1px solid rgba(201,168,76,0.35);color:var(--gold);padding:6px 16px;border-radius:2px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+.nav-logout:hover{background:rgba(201,168,76,0.08)}
+
+/* PAGE HEADER */
+.page-header{background:var(--dark2);border-bottom:1px solid rgba(201,168,76,0.1);padding:48px 40px 40px}
+.page-header-inner{max-width:1100px;margin:0 auto}
+.page-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;margin-bottom:6px}
+.page-title em{color:var(--gold);font-style:italic}
+.page-sub{font-size:13px;color:var(--text-muted)}
+
+/* STATS STRIP */
+.stats-strip{background:var(--dark3);border-bottom:1px solid rgba(201,168,76,0.08);padding:18px 40px}
+.stats-inner{max-width:1100px;margin:0 auto;display:flex;gap:40px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+.stat-value{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);font-weight:600}
+
+/* MAIN CONTENT */
+.main{max-width:1100px;margin:0 auto;padding:40px}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;align-items:center}
+.filter-tab{background:transparent;border:1px solid rgba(201,168,76,0.2);color:var(--text-muted);padding:7px 18px;border-radius:20px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.25s}
+.filter-tab.active,.filter-tab:hover{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+.filter-bar-right{margin-left:auto}
+.search-mini{background:var(--dark2);border:1px solid rgba(201,168,76,0.2);color:var(--cream);padding:8px 14px;border-radius:20px;font-family:'Jost',sans-serif;font-size:12px;outline:none;transition:border-color 0.2s;width:200px}
+.search-mini:focus{border-color:var(--gold)}
+.search-mini::placeholder{color:var(--text-muted)}
+
+/* ORDER CARDS */
+.orders-list{display:flex;flex-direction:column;gap:20px}
+
+.order-card{background:var(--dark2);border:1px solid rgba(201,168,76,0.1);border-radius:4px;overflow:hidden;transition:border-color 0.3s,transform 0.2s;animation:fadeUp 0.4s ease both}
+.order-card:hover{border-color:rgba(201,168,76,0.35);transform:translateY(-2px)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.order-head{padding:20px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid rgba(201,168,76,0.07);cursor:pointer;user-select:none}
+.order-id{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--cream);font-weight:400}
+.order-id span{color:var(--gold)}
+.order-meta{display:flex;gap:20px;flex-wrap:wrap;align-items:center;flex:1}
+.order-meta-item{display:flex;flex-direction:column;gap:1px}
+.order-meta-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted)}
+.order-meta-value{font-size:13px;color:var(--text-light)}
+.order-total{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);margin-left:auto}
+.chevron{color:var(--text-muted);transition:transform 0.3s;font-size:16px;margin-left:8px}
+.order-card.expanded .chevron{transform:rotate(180deg)}
+
+/* STATUS BADGE */
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+.status-delivered{background:rgba(74,222,128,0.12);color:var(--green);border:1px solid rgba(74,222,128,0.25)}
+.status-processing{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.25)}
+.status-shipped{background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.25)}
+.status-cancelled{background:rgba(185,28,28,0.1);color:#f87171;border:1px solid rgba(185,28,28,0.25)}
+.status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ORDER BODY */
+.order-body{padding:0 24px;max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s}
+.order-card.expanded .order-body{max-height:600px;padding:20px 24px}
+
+.order-items{display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
+.order-item{display:flex;align-items:center;gap:14px;padding:12px;background:var(--dark3);border-radius:3px;border:1px solid rgba(201,168,76,0.06)}
+.order-item-icon{width:40px;height:40px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.order-item-info{flex:1;min-width:0}
+.order-item-name{font-size:14px;color:var(--cream);margin-bottom:2px}
+.order-item-qty{font-size:12px;color:var(--text-muted)}
+.order-item-price{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold)}
+
+.order-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(201,168,76,0.08);flex-wrap:wrap;gap:10px}
+.order-actions{display:flex;gap:8px}
+.btn-sm{padding:8px 18px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;border-radius:2px;cursor:pointer;transition:all 0.2s}
+.btn-reorder{background:var(--gold);color:var(--dark);border:none}
+.btn-reorder:hover{background:var(--gold-light)}
+.btn-track{background:transparent;border:1px solid rgba(201,168,76,0.35);color:var(--gold)}
+.btn-track:hover{background:rgba(201,168,76,0.08)}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:80px 20px}
+.empty-icon{font-size:56px;margin-bottom:20px;opacity:0.5}
+.empty-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:10px;color:var(--cream)}
+.empty-sub{font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.7}
+.btn-shop{background:var(--gold);color:var(--dark);border:none;padding:13px 32px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-weight:500;transition:all 0.3s}
+.btn-shop:hover{background:var(--gold-light)}
+
+/* FOOTER */
+.page-footer{margin-top:auto;border-top:1px solid rgba(201,168,76,0.08);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text-muted)}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark3);border:1px solid rgba(201,168,76,0.4);color:var(--cream);padding:13px 26px;border-radius:2px;font-size:13px;z-index:9999;transition:transform 0.4s;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast-icon{color:var(--gold)}
+
+@media(max-width:680px){
+  nav{padding:0 16px}.nav-links{display:none}
+  .page-header,.main{padding-left:16px;padding-right:16px}
+  .stats-strip{padding:14px 16px}
+  .stats-inner{gap:20px}
+  .order-head{padding:16px}
+  .order-body{padding:0 16px}
+  .order-card.expanded .order-body{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-text">Moonlight Flame</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="{% url 'products' %}">Home</a></li>
+    <li><a href="{% url 'orders' %}"class="active">Orders</a></li>
+    <li><form method="post" action="{% url 'logout' %}" style="display:inline">{% csrf_token %}<button type="submit" style="background:none;border:0;color:inherit;font:inherit;cursor:pointer;">Logout</button></form></li>
+  </ul>
+  <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="nav-logout" type="submit">Logout</button></form>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-eyebrow">Account</p>
+    <h1 class="page-title">My <em>Orders</em></h1>
+    <p class="page-sub">Track, manage, and review your Moonlight Flame purchases.</p>
+  </div>
+</div>
+
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-label">Total Orders</span>
+      <span class="stat-value">
+        {{ orders.count }}
+    </span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Total Spent</span>
+      <span class="stat-value">
+        ₹{{ total_spent }}
+    </span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Delivered</span>
+      <span class="stat-value" id="statDelivered">0</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-tab active" onclick="filterOrders('all',this)">All Orders</button>
+    <button class="filter-tab" onclick="filterOrders('Processing',this)">Processing</button>
+    <button class="filter-tab" onclick="filterOrders('Shipped',this)">Shipped</button>
+    <button class="filter-tab" onclick="filterOrders('Delivered',this)">Delivered</button>
+    <button class="filter-tab" onclick="filterOrders('Cancelled',this)">Cancelled</button>
+    <div class="filter-bar-right">
+      <input class="search-mini" id="searchOrders" type="text" placeholder="Search orders…" oninput="searchOrdersFn(this.value)">
+    </div>
+  </div>
+
+  <!-- ORDERS LIST -->
+  <div class="orders-list">
+
+{% for order in orders %}
+<div class="order-card expanded" data-status="{{ order.status }}" data-order="{{ order.id }}">
+
+    <div class="order-head">
+
+        <div>
+            <div class="order-id">
+                Order <span>#{{ order.id }}</span>
+            </div>
+        </div>
+
+        <div class="order-meta">
+
+            <div class="order-meta-item">
+                <span class="order-meta-label">Date</span>
+                <span class="order-meta-value">
+                    {{ order.created_at }}
+                </span>
+            </div>
+
+            <div class="order-meta-item">
+                <span class="order-meta-label">Items</span>
+                <span class="order-meta-value">
+                    {{ order.items.count }} candles
+                </span>
+            </div>
+
+        </div>
+
+        <span class="status-badge status-{{ order.status|lower }}"><span class="status-dot"></span>{{ order.status }}</span>
+        <span class="order-total">₹{{ order.total_price }}</span>
+
+    </div>
+
+    <div class="order-body">
+
+        <div class="order-items">
+
+            {% for item in order.items.all %}
+            <div class="order-item">
+
+                <div class="order-item-icon">
+                    🕯️
+                </div>
+
+                <div class="order-item-info">
+                    <div class="order-item-name">
+                        {{ item.candle_name }}
+                    </div>
+
+                    <div class="order-item-qty">
+                        Qty: {{ item.quantity }}
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+{% empty %}
+<div class="empty-state">
+    <div class="empty-icon">📦</div>
+    <h2 class="empty-title">No Orders Yet</h2>
+</div>
+{% endfor %}
+
+</div>
+</div>
+
+<div class="page-footer">
+  <span>© 2024 Moonlight Flame. All rights reserved.</span>
+  <a href="{% url 'products' %}"style="color:var(--gold)">← Back to Shop</a>
+</div>
+
+<div class="toast" id="toast"><span class="toast-icon">✦</span><span id="toastMsg"></span></div>
+
+<script>
+function toggleCard(id) {
+  const card = document.querySelector(`[data-order="${id}"]`);
+  if (card) card.classList.toggle('expanded');
+}
+
+document.querySelectorAll('.order-head').forEach(head => {
+  head.addEventListener('click', () => head.closest('.order-card').classList.toggle('expanded'));
+});
+
+function filterOrders(status, btn) {
+  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.order-card').forEach(card => {
+    card.style.display = (status === 'all' || card.dataset.status === status) ? '' : 'none';
+  });
+}
+
+function searchOrdersFn(value) {
+  const q = value.trim().toLowerCase();
+  document.querySelectorAll('.order-card').forEach(card => {
+    card.style.display = (!q || card.dataset.order.toLowerCase().includes(q)) ? '' : 'none';
+  });
+}
+
+document.getElementById('statDelivered').textContent =
+  document.querySelectorAll('.order-card[data-status="Delivered"]').length;
+</script>
+</body>
+</html>
