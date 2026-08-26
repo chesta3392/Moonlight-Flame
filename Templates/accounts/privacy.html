@@ -1,1 +1,69 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Privacy Policy – Moonlight Flame</title><style>body{font-family:Arial,sans-serif;background:#0d0d0d;color:#f5f0e8;max-width:800px;margin:0 auto;padding:60px 24px;line-height:1.8}h1{color:#c9a84c}a{color:#c9a84c}</style></head><body><h1>Privacy Policy</h1><p>Moonlight Flame uses the information you provide to process orders, communicate with you and provide customer support. We do not display your account information publicly. Contact the store for privacy-related questions.</p><p><a href="{% url 'products' %}">← Back to shop</a></p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/media/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/media/apple-touch-icon.png">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy – Moonlight Flame</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-dark-bg: #0A0A0A;
+  --color-dark-surface: #141312;
+  --color-dark-border: rgba(197, 168, 128, 0.12);
+  --color-gold: #C5A880;
+  --color-text-light: #F5EFEB;
+  --color-text-light-muted: #A89D90;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Jost', sans-serif;
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-dark-bg);
+  color: var(--color-text-light);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-family: var(--font-serif);
+  color: var(--color-gold);
+  font-size: clamp(36px, 5vw, 48px);
+  font-weight: 300;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--color-dark-border);
+  padding-bottom: 14px;
+}
+
+p {
+  color: var(--color-text-light-muted);
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+  font-size: 14px;
+  transition: var(--transition-smooth);
+}
+
+a:hover {
+  color: var(--color-text-light);
+}
+</style>
+</head>
+<body>
+  <h1>Privacy Policy</h1>
+  <p>Moonlight Flame uses the information you provide to process orders, communicate with you and provide customer support. We do not display your account information publicly. Contact the store for privacy-related questions.</p>
+  <p><a href="{% url 'products' %}">← Back to shop</a></p>
+</body>
+</html>

@@ -1,111 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/media/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/media/apple-touch-icon.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Register – Moonlight Flame</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --gold:#c9a84c;--gold-light:#e8d5a3;
-  --dark:#0d0d0d;--dark2:#1a1a1a;--dark3:#242424;
-  --cream:#f5f0e8;--cream2:#ede5d8;
-  --red:#b91c1c;
-  --text-light:#d4c9b8;--text-muted:#8a7f72;
-  --green:#4ade80;
+:root {
+  --color-dark-bg: #0A0A0A;
+  --color-dark-surface: #141312;
+  --color-dark-border: rgba(197, 168, 128, 0.12);
+  --color-cream-bg: #FAF7F2;
+  --color-cream-surface: #F5EFEB;
+  --color-cream-border: rgba(44, 38, 32, 0.08);
+  --color-gold: #C5A880;
+  --color-gold-hover: #A38760;
+  --color-text-dark: #2C2620;
+  --color-text-dark-muted: #7E7265;
+  --color-text-light: #F5EFEB;
+  --color-text-light-muted: #A89D90;
+  --color-red: #9C1C1C;
+  --color-green: #22c55e;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Jost', sans-serif;
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-body{font-family:'Jost',sans-serif;background:var(--dark);color:var(--cream);min-height:100vh;display:flex;flex-direction:column}
-a{color:inherit;text-decoration:none}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--dark2)}
-::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
 
-/* NAV */
-nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px}
-.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);transition:color 0.3s}
-.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* PAGE */
-.page-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 20px;position:relative;overflow:hidden}
-.page-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(201,168,76,0.05) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(185,28,28,0.04) 0%,transparent 50%)}
+body {
+  font-family: var(--font-sans);
+  background: var(--color-dark-bg);
+  color: var(--color-text-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* CARD */
-.auth-card{background:var(--dark2);border:1px solid rgba(201,168,76,0.18);border-radius:6px;width:100%;max-width:440px;padding:48px 40px;position:relative;animation:fadeUp 0.5s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.auth-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:2px;background:var(--gold)}
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
 
-.auth-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:10px}
-.auth-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;text-align:center;margin-bottom:6px;line-height:1.1}
-.auth-title em{color:var(--gold);font-style:italic}
-.auth-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:36px;line-height:1.6}
+/* Navigation */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--color-dark-border);
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
 
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
-.form-group label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted)}
-.form-group input{background:var(--dark3);border:1px solid rgba(201,168,76,0.2);color:var(--cream);padding:12px 16px;border-radius:2px;font-family:'Jost',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s}
-.form-group input:focus{border-color:var(--gold)}
-.form-group input::placeholder{color:var(--text-muted)}
-.form-group input.valid{border-color:var(--green)}
-.form-group input.invalid{border-color:var(--red)}
+.nav-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
 
-.password-strength{height:3px;border-radius:2px;background:var(--dark3);margin-top:6px;overflow:hidden;transition:all 0.3s}
-.password-strength-bar{height:100%;border-radius:2px;transition:all 0.4s}
+.nav-logo-img {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+  display: block;
+}
 
-.strength-weak .password-strength-bar{width:33%;background:var(--red)}
-.strength-medium .password-strength-bar{width:66%;background:var(--gold)}
-.strength-strong .password-strength-bar{width:100%;background:var(--green)}
+.nav-logo-text {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+}
 
-.strength-label{font-size:11px;color:var(--text-muted);margin-top:4px}
+.nav-logo-text span {
+  color: var(--color-gold);
+}
 
-.terms{display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;font-size:12px;color:var(--text-muted);line-height:1.5}
-.terms input[type="checkbox"]{margin-top:2px;accent-color:var(--gold);width:14px;height:14px;flex-shrink:0;cursor:pointer}
-.terms a{color:var(--gold)}
-.terms a:hover{color:var(--gold-light)}
+@media(max-width: 480px) {
+  .nav-logo-text {
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+  .nav-logo-link {
+    gap: 8px;
+  }
+  .nav-logo-img {
+    height: 26px;
+    width: 26px;
+  }
+}
 
-.submit-btn{width:100%;background:var(--gold);color:var(--dark);border:none;padding:15px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-weight:500;transition:all 0.3s}
-.submit-btn:hover{background:var(--gold-light);transform:translateY(-1px)}
-.submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
 
-.divider{display:flex;align-items:center;gap:12px;margin:24px 0}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(201,168,76,0.12)}
-.divider span{font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase}
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-light-muted);
+  font-weight: 400;
+}
 
-.switch-link{text-align:center;font-size:13px;color:var(--text-muted)}
-.switch-link a{color:var(--gold)}
-.switch-link a:hover{color:var(--gold-light)}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--color-gold);
+}
 
-.perks{display:flex;gap:20px;justify-content:center;margin-bottom:28px;flex-wrap:wrap}
-.perk{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);letter-spacing:0.5px}
-.perk-icon{color:var(--gold);font-size:13px}
+/* PAGE WRAP */
+.page-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  position: relative;
+}
+
+/* AUTH CARD */
+.auth-card {
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-dark-border);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 460px;
+  padding: 48px 40px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.auth-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.auth-title {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 42px);
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+
+.auth-title em {
+  color: var(--color-gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.auth-sub {
+  font-size: 14px;
+  color: var(--color-text-light-muted);
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.perks {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-light-muted);
+  letter-spacing: 0.5px;
+}
+
+.perk-icon {
+  color: var(--color-gold);
+  font-size: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text-light-muted);
+}
+
+.form-group input {
+  background: var(--color-dark-bg);
+  border: 1px solid var(--color-dark-border);
+  color: var(--color-text-light);
+  padding: 13px 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.form-group input:focus {
+  border-color: var(--color-gold);
+}
+
+.form-group input::placeholder {
+  color: var(--color-text-light-muted);
+}
+
+.form-group input.valid {
+  border-color: var(--color-green);
+}
+
+.form-group input.invalid {
+  border-color: var(--color-red);
+}
+
+.password-strength {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-dark-bg);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.password-strength-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: var(--transition-smooth);
+}
+
+.strength-weak .password-strength-bar {
+  width: 33%;
+  background: var(--color-red);
+}
+
+.strength-medium .password-strength-bar {
+  width: 66%;
+  background: var(--color-gold);
+}
+
+.strength-strong .password-strength-bar {
+  width: 100%;
+  background: var(--color-green);
+}
+
+.strength-label {
+  font-size: 11px;
+  color: var(--color-text-light-muted);
+  margin-top: 4px;
+}
+
+.terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--color-text-light-muted);
+  line-height: 1.6;
+}
+
+.terms input[type="checkbox"] {
+  margin-top: 4px;
+  accent-color: var(--color-gold);
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.terms a {
+  color: var(--color-gold);
+}
+
+.submit-btn {
+  width: 100%;
+  background: var(--color-gold);
+  color: var(--color-dark-bg);
+  border: none;
+  padding: 16px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.submit-btn:hover {
+  background: var(--color-gold-hover);
+  transform: translateY(-1px);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-dark-border);
+}
+
+.divider span {
+  font-size: 11px;
+  color: var(--color-text-light-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.switch-link {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-light-muted);
+}
+
+.switch-link a {
+  color: var(--color-gold);
+}
+
+.switch-link a:hover {
+  color: var(--color-text-light);
+}
 
 /* Toast */
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark3);border:1px solid rgba(201,168,76,0.4);color:var(--cream);padding:13px 26px;border-radius:2px;font-size:13px;z-index:9999;transition:transform 0.4s;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.toast-icon{color:var(--gold)}
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-gold);
+  color: var(--color-text-light);
+  padding: 14px 28px;
+  font-size: 13px;
+  z-index: 9999;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
 
-@media(max-width:520px){nav{padding:0 20px}.nav-links{display:none}.auth-card{padding:36px 24px}.form-row{grid-template-columns:1fr}}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-icon {
+  color: var(--color-gold);
+}
+
+@media(max-width: 768px) {
+  nav {
+    padding: 0 30px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .auth-card {
+    padding: 40px 24px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">
-    <span class="nav-logo-text">Moonlight Flame</span>
-  </div>
+  <a href="{% url 'products' %}" class="nav-logo-link">
+    <img src="/media/logo_icon.png" alt="Moonlight Flame Logo" class="nav-logo-img">
+    <span class="nav-logo-text">Moonlight <span>Flame</span></span>
+  </a>
+  
   <ul class="nav-links">
     <li><a href="{% url 'products' %}">Home</a></li>
     <li><a href="{% url 'orders' %}">Orders</a></li>
     <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="{% url 'register' %}"class="active">Register</a></li>
+    <li><a href="{% url 'register' %}" class="active">Register</a></li>
   </ul>
 </nav>
 
 <div class="page-wrap">
   <div class="auth-card">
-
     <p class="auth-eyebrow">Join us</p>
     <h1 class="auth-title">Create <em>Account</em></h1>
     <p class="auth-sub">Unlock exclusive benefits and track your orders with ease.</p>
@@ -115,21 +435,23 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-fi
       <span class="perk"><span class="perk-icon">✦</span> Order history</span>
       <span class="perk"><span class="perk-icon">✦</span> Early access</span>
     </div>
+
     {% if error %}
-        <p style="color:#f87171;text-align:center;margin-bottom:14px;">{{ error }}</p>
+      <p style="color:var(--color-red);text-align:center;margin-bottom:14px;font-size:14px;">{{ error }}</p>
     {% endif %}
+
     {% if messages %}
-    {% for message in messages %}
-        <p style="color:#c9a84c; text-align:center; margin-bottom:10px;">
-            {{ message }}
+      {% for message in messages %}
+        <p style="color:var(--color-gold); text-align:center; margin-bottom:10px; font-size:14px;">
+          {{ message }}
         </p>
-    {% endfor %}
-{% endif %}
+      {% endfor %}
+    {% endif %}
 
     <form method="POST">
-    {% csrf_token %}
+      {% csrf_token %}
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="username">Username</label>
         <input type="text"
                id="username"
@@ -138,55 +460,48 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-fi
                autocomplete="username"
                oninput="validateUsername(this)"
                required>
-    </div>
+      </div>
 
-    <div class="form-row">
-
-<div class="form-group">
-    <label for="password1">Password</label>
-
-    <input type="password"
-           id="password1"
-           name="password"
-           placeholder="Min 8 chars"
-           autocomplete="new-password"
-           oninput="checkStrength(this)"
-           required>
-
-    <div class="password-strength" id="strengthBar">
-        <div class="password-strength-bar"></div>
-    </div>
-
-    <span class="strength-label" id="strengthLabel"></span>
-</div>
-
+      <div class="form-row">
         <div class="form-group">
-            <label for="password2">Confirm</label>
-            <input type="password"
-                   id="password2"
-                   name="password2"
-                   placeholder="Repeat password"
-                   autocomplete="new-password"
-                   oninput="checkMatch(this)"
-                   required>
+          <label for="password1">Password</label>
+          <input type="password"
+                 id="password1"
+                 name="password"
+                 placeholder="Min 8 chars"
+                 autocomplete="new-password"
+                 oninput="checkStrength(this)"
+                 required>
+          <div class="password-strength" id="strengthBar">
+            <div class="password-strength-bar"></div>
+          </div>
+          <span class="strength-label" id="strengthLabel"></span>
         </div>
 
-    </div>
+        <div class="form-group">
+          <label for="password2">Confirm</label>
+          <input type="password"
+                 id="password2"
+                 name="password2"
+                 placeholder="Repeat password"
+                 autocomplete="new-password"
+                 oninput="checkMatch(this)"
+                 required>
+        </div>
+      </div>
 
-    <div class="terms">
+      <div class="terms">
         <input type="checkbox" id="agree" required>
         <label for="agree">
-            I agree to the
-            <a href="{% url 'terms' %}">Terms of Service</a>
-            and
-            <a href="{% url 'privacy' %}">Privacy Policy</a>
+          I agree to the <a href="{% url 'terms' %}" target="_blank">Terms of Service</a> and <a href="{% url 'privacy' %}" target="_blank">Privacy Policy</a>
         </label>
-    </div>
+      </div>
 
-    <button type="submit" class="submit-btn" id="submitBtn">
+      <button type="submit" class="submit-btn" id="submitBtn">
         Create Account ✦
-    </button>
-</form>
+      </button>
+    </form>
+
     <div class="divider"><span>or</span></div>
     <p class="switch-link">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
   </div>
@@ -197,6 +512,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-fi
 <script>
 function showToast(msg) {
   const t = document.getElementById('toast');
+  if (!t) return;
   document.getElementById('toastMsg').textContent = msg;
   t.classList.add('show');
   clearTimeout(t._timer);
@@ -217,9 +533,19 @@ function checkStrength(el) {
   if (!v) { label.textContent = ''; return; }
   const strong = v.length >= 10 && /[A-Z]/.test(v) && /[0-9]/.test(v);
   const medium = v.length >= 8;
-  if (strong) { bar.classList.add('strength-strong'); label.textContent = 'Strong'; label.style.color='var(--green)'; }
-  else if (medium) { bar.classList.add('strength-medium'); label.textContent = 'Medium'; label.style.color='var(--gold)'; }
-  else { bar.classList.add('strength-weak'); label.textContent = 'Weak'; label.style.color='var(--red)'; }
+  if (strong) { 
+    bar.classList.add('strength-strong'); 
+    label.textContent = 'Strong'; 
+    label.style.color = 'var(--color-green)'; 
+  } else if (medium) { 
+    bar.classList.add('strength-medium'); 
+    label.textContent = 'Medium'; 
+    label.style.color = 'var(--color-gold)'; 
+  } else { 
+    bar.classList.add('strength-weak'); 
+    label.textContent = 'Weak'; 
+    label.style.color = 'var(--color-red)'; 
+  }
 }
 
 function checkMatch(el) {
@@ -227,8 +553,6 @@ function checkMatch(el) {
   el.classList.toggle('valid', el.value === p1 && el.value.length > 0);
   el.classList.toggle('invalid', el.value !== p1 && el.value.length > 0);
 }
-
-
 </script>
 </body>
 </html>
