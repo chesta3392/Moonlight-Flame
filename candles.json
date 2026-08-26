@@ -1,0 +1,50 @@
+[
+{
+  "model": "store.candle",
+  "pk": 1,
+  "fields": {
+    "name": "Rose Noir",
+    "description": "Rose, Patchouli, Musk",
+    "price": "399.00",
+    "stock": 10,
+    "image": "candles/WhatsApp_Image_2026-05-26_at_6.52.31_PM.jpeg",
+    "category": "Floral"
+  }
+},
+{
+  "model": "store.candle",
+  "pk": 2,
+  "fields": {
+    "name": "Vanilla Amber",
+    "description": "Vanilla, Amber, Tonka",
+    "price": "449.00",
+    "stock": 8,
+    "image": "candles/WhatsApp_Image_2026-05-26_at_6.52.32_PM.jpeg",
+    "category": "Vanilla"
+  }
+},
+{
+  "model": "store.candle",
+  "pk": 3,
+  "fields": {
+    "name": "Midnight Oud",
+    "description": "Oud, Leather, Saffron",
+    "price": "499.00",
+    "stock": 15,
+    "image": "candles/WhatsApp_Image_2026-05-26_at_6.52.33_PM.jpeg",
+    "category": "Oud"
+  }
+},
+{
+  "model": "store.candle",
+  "pk": 4,
+  "fields": {
+    "name": "Sandalwood Ritual",
+    "description": "Sandalwood, Vetiver, Musk",
+    "price": "599.00",
+    "stock": 5,
+    "image": "candles/WhatsApp_Image_2026-05-26_at_6.52.34_PM.jpeg",
+    "category": "Woody"
+  }
+}
+]
