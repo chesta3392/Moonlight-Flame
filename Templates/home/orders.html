@@ -1,149 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/media/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/media/apple-touch-icon.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Orders – Moonlight Flame</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --gold:#c9a84c;--gold-light:#e8d5a3;
-  --dark:#0d0d0d;--dark2:#1a1a1a;--dark3:#242424;
-  --cream:#f5f0e8;
-  --red:#b91c1c;
-  --text-light:#d4c9b8;--text-muted:#8a7f72;
-  --green:#4ade80;
-  --purple:#7c3aed;
+:root {
+  --color-dark-bg: #0A0A0A;
+  --color-dark-surface: #141312;
+  --color-dark-border: rgba(197, 168, 128, 0.12);
+  --color-cream-bg: #FAF7F2;
+  --color-cream-surface: #F5EFEB;
+  --color-cream-border: rgba(44, 38, 32, 0.08);
+  --color-gold: #C5A880;
+  --color-gold-hover: #A38760;
+  --color-text-dark: #2C2620;
+  --color-text-dark-muted: #7E7265;
+  --color-text-light: #F5EFEB;
+  --color-text-light-muted: #A89D90;
+  --color-red: #9C1C1C;
+  --color-green: #22c55e;
+  --color-purple: #a78bfa;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Jost', sans-serif;
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-body{font-family:'Jost',sans-serif;background:var(--dark);color:var(--cream);min-height:100vh;display:flex;flex-direction:column}
-a{color:inherit;text-decoration:none}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--dark2)}
-::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
 
-/* NAV */
-nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px}
-.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);transition:color 0.3s}
-.nav-links a:hover,.nav-links a.active{color:var(--gold)}
-.nav-logout{background:none;border:1px solid rgba(201,168,76,0.35);color:var(--gold);padding:6px 16px;border-radius:2px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
-.nav-logout:hover{background:rgba(201,168,76,0.08)}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-dark-bg);
+  color: var(--color-text-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-dark-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 3px;
+}
+
+/* Navigation */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--color-dark-border);
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.nav-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-logo-img {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+.nav-logo-text {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+}
+
+.nav-logo-text span {
+  color: var(--color-gold);
+}
+
+@media(max-width: 480px) {
+  .nav-logo-text {
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+  .nav-logo-link {
+    gap: 8px;
+  }
+  .nav-logo-img {
+    height: 26px;
+    width: 26px;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-light-muted);
+  font-weight: 400;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--color-gold);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-icon-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-light-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.nav-icon-btn:hover {
+  color: var(--color-gold);
+}
+
+.nav-icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* User Account Dropdown */
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 42px;
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-dark-border);
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 1100;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.profile-dropdown-content.show {
+  display: block;
+}
+
+.profile-dropdown-content a {
+  color: var(--color-text-light-muted);
+  padding: 12px 18px;
+  text-decoration: none;
+  display: block;
+  font-size: 13px;
+  text-align: left;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: var(--transition-smooth);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.05);
+}
+
+.profile-dropdown-content a:hover {
+  background: rgba(197, 168, 128, 0.08);
+  color: var(--color-gold);
+}
+
+.profile-user-info {
+  padding: 12px 18px;
+  font-size: 11px;
+  color: var(--color-gold);
+  border-bottom: 1px solid var(--color-dark-border);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
 
 /* PAGE HEADER */
-.page-header{background:var(--dark2);border-bottom:1px solid rgba(201,168,76,0.1);padding:48px 40px 40px}
-.page-header-inner{max-width:1100px;margin:0 auto}
-.page-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;margin-bottom:6px}
-.page-title em{color:var(--gold);font-style:italic}
-.page-sub{font-size:13px;color:var(--text-muted)}
+.page-header {
+  background: var(--color-dark-surface);
+  border-bottom: 1px solid var(--color-dark-border);
+  padding: 60px 40px;
+}
+
+.page-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.page-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 5vw, 54px);
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.page-title em {
+  color: var(--color-gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.page-sub {
+  font-size: 14px;
+  color: var(--color-text-light-muted);
+}
 
 /* STATS STRIP */
-.stats-strip{background:var(--dark3);border-bottom:1px solid rgba(201,168,76,0.08);padding:18px 40px}
-.stats-inner{max-width:1100px;margin:0 auto;display:flex;gap:40px;flex-wrap:wrap}
-.stat{display:flex;flex-direction:column;gap:2px}
-.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
-.stat-value{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);font-weight:600}
+.stats-strip {
+  background: var(--color-dark-bg);
+  border-bottom: 1px solid var(--color-dark-border);
+  padding: 20px 40px;
+}
+
+.stats-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-light-muted);
+}
+
+.stat-value {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  color: var(--color-gold);
+  font-weight: 600;
+}
 
 /* MAIN CONTENT */
-.main{max-width:1100px;margin:0 auto;padding:40px}
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  width: 100%;
+}
 
 /* FILTER BAR */
-.filter-bar{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;align-items:center}
-.filter-tab{background:transparent;border:1px solid rgba(201,168,76,0.2);color:var(--text-muted);padding:7px 18px;border-radius:20px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.25s}
-.filter-tab.active,.filter-tab:hover{background:var(--gold);color:var(--dark);border-color:var(--gold)}
-.filter-bar-right{margin-left:auto}
-.search-mini{background:var(--dark2);border:1px solid rgba(201,168,76,0.2);color:var(--cream);padding:8px 14px;border-radius:20px;font-family:'Jost',sans-serif;font-size:12px;outline:none;transition:border-color 0.2s;width:200px}
-.search-mini:focus{border-color:var(--gold)}
-.search-mini::placeholder{color:var(--text-muted)}
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-tab {
+  background: transparent;
+  border: 1px solid var(--color-dark-border);
+  color: var(--color-text-light-muted);
+  padding: 8px 22px;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.filter-tab.active, .filter-tab:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  background: var(--color-dark-surface);
+}
+
+.filter-bar-right {
+  margin-left: auto;
+}
+
+.search-mini {
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-dark-border);
+  color: var(--color-text-light);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  transition: var(--transition-smooth);
+  width: 220px;
+}
+
+.search-mini:focus {
+  border-color: var(--color-gold);
+}
+
+.search-mini::placeholder {
+  color: var(--color-text-light-muted);
+}
 
 /* ORDER CARDS */
-.orders-list{display:flex;flex-direction:column;gap:20px}
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
-.order-card{background:var(--dark2);border:1px solid rgba(201,168,76,0.1);border-radius:4px;overflow:hidden;transition:border-color 0.3s,transform 0.2s;animation:fadeUp 0.4s ease both}
-.order-card:hover{border-color:rgba(201,168,76,0.35);transform:translateY(-2px)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.order-card {
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-dark-border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
 
-.order-head{padding:20px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid rgba(201,168,76,0.07);cursor:pointer;user-select:none}
-.order-id{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--cream);font-weight:400}
-.order-id span{color:var(--gold)}
-.order-meta{display:flex;gap:20px;flex-wrap:wrap;align-items:center;flex:1}
-.order-meta-item{display:flex;flex-direction:column;gap:1px}
-.order-meta-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted)}
-.order-meta-value{font-size:13px;color:var(--text-light)}
-.order-total{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);margin-left:auto}
-.chevron{color:var(--text-muted);transition:transform 0.3s;font-size:16px;margin-left:8px}
-.order-card.expanded .chevron{transform:rotate(180deg)}
+.order-card:hover {
+  border-color: var(--color-gold);
+}
+
+.order-head {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.order-id {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--color-text-light);
+  font-weight: 400;
+}
+
+.order-id span {
+  color: var(--color-gold);
+}
+
+.order-meta {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;
+}
+
+.order-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.order-meta-label {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text-light-muted);
+}
+
+.order-meta-value {
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+
+.order-total {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: var(--color-gold);
+  font-weight: 500;
+}
+
+.chevron {
+  color: var(--color-text-light-muted);
+  transition: var(--transition-smooth);
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+.order-card.expanded .chevron {
+  transform: rotate(180deg);
+}
 
 /* STATUS BADGE */
-.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
-.status-delivered{background:rgba(74,222,128,0.12);color:var(--green);border:1px solid rgba(74,222,128,0.25)}
-.status-processing{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.25)}
-.status-shipped{background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.25)}
-.status-cancelled{background:rgba(185,28,28,0.1);color:#f87171;border:1px solid rgba(185,28,28,0.25)}
-.status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.status-delivered {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-green);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.status-processing {
+  background: rgba(197, 168, 128, 0.1);
+  color: var(--color-gold);
+  border: 1px solid rgba(197, 168, 128, 0.2);
+}
+
+.status-shipped {
+  background: rgba(167, 139, 250, 0.1);
+  color: var(--color-purple);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.status-cancelled {
+  background: rgba(156, 28, 28, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(156, 28, 28, 0.2);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
 
 /* ORDER BODY */
-.order-body{padding:0 24px;max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s}
-.order-card.expanded .order-body{max-height:600px;padding:20px 24px}
+.order-body {
+  padding: 0 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.4s;
+}
 
-.order-items{display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
-.order-item{display:flex;align-items:center;gap:14px;padding:12px;background:var(--dark3);border-radius:3px;border:1px solid rgba(201,168,76,0.06)}
-.order-item-icon{width:40px;height:40px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.order-item-info{flex:1;min-width:0}
-.order-item-name{font-size:14px;color:var(--cream);margin-bottom:2px}
-.order-item-qty{font-size:12px;color:var(--text-muted)}
-.order-item-price{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold)}
+.order-card.expanded .order-body {
+  max-height: 800px;
+  padding: 24px;
+  border-top: 1px solid var(--color-dark-border);
+}
 
-.order-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(201,168,76,0.08);flex-wrap:wrap;gap:10px}
-.order-actions{display:flex;gap:8px}
-.btn-sm{padding:8px 18px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;border-radius:2px;cursor:pointer;transition:all 0.2s}
-.btn-reorder{background:var(--gold);color:var(--dark);border:none}
-.btn-reorder:hover{background:var(--gold-light)}
-.btn-track{background:transparent;border:1px solid rgba(201,168,76,0.35);color:var(--gold)}
-.btn-track:hover{background:rgba(201,168,76,0.08)}
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--color-dark-bg);
+  border-radius: 4px;
+  border: 1px solid var(--color-dark-border);
+}
+
+.order-item-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-dark-border);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.order-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-item-name {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--color-text-light);
+  margin-bottom: 4px;
+}
+
+.order-item-qty {
+  font-size: 13px;
+  color: var(--color-text-light-muted);
+}
 
 /* EMPTY STATE */
-.empty-state{text-align:center;padding:80px 20px}
-.empty-icon{font-size:56px;margin-bottom:20px;opacity:0.5}
-.empty-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:10px;color:var(--cream)}
-.empty-sub{font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.7}
-.btn-shop{background:var(--gold);color:var(--dark);border:none;padding:13px 32px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-weight:500;transition:all 0.3s}
-.btn-shop:hover{background:var(--gold-light)}
+.empty-state {
+  text-align: center;
+  padding: 100px 20px;
+  color: var(--color-text-light-muted);
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.empty-title {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 12px;
+  color: var(--color-text-light);
+}
+
+.empty-sub {
+  font-size: 14px;
+  color: var(--color-text-light-muted);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.btn-shop {
+  background: var(--color-gold);
+  color: var(--color-dark-bg);
+  border: none;
+  padding: 16px 36px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.btn-shop:hover {
+  background: var(--color-gold-hover);
+}
 
 /* FOOTER */
-.page-footer{margin-top:auto;border-top:1px solid rgba(201,168,76,0.08);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text-muted)}
+.page-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--color-dark-border);
+  padding: 30px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text-light-muted);
+  background: var(--color-dark-surface);
+}
 
-/* Toast */
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark3);border:1px solid rgba(201,168,76,0.4);color:var(--cream);padding:13px 26px;border-radius:2px;font-size:13px;z-index:9999;transition:transform 0.4s;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.toast-icon{color:var(--gold)}
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-gold);
+  color: var(--color-text-light);
+  padding: 14px 28px;
+  font-size: 13px;
+  z-index: 9999;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
 
-@media(max-width:680px){
-  nav{padding:0 16px}.nav-links{display:none}
-  .page-header,.main{padding-left:16px;padding-right:16px}
-  .stats-strip{padding:14px 16px}
-  .stats-inner{gap:20px}
-  .order-head{padding:16px}
-  .order-body{padding:0 16px}
-  .order-card.expanded .order-body{padding:16px}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-icon {
+  color: var(--color-gold);
+}
+
+@media(max-width: 768px) {
+  nav {
+    padding: 0 30px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .page-header, .main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .stats-strip {
+    padding: 14px 20px;
+  }
+  
+  .stats-inner {
+    gap: 30px;
+  }
+  
+  .order-head {
+    padding: 20px;
+  }
+  
+  .order-body {
+    padding: 0 20px;
+  }
+  
+  .order-card.expanded .order-body {
+    padding: 20px;
+  }
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">
-    <span class="nav-logo-text">Moonlight Flame</span>
-  </div>
+  <a href="{% url 'products' %}" class="nav-logo-link">
+    <img src="/media/logo_icon.png" alt="Moonlight Flame Logo" class="nav-logo-img">
+    <span class="nav-logo-text">Moonlight <span>Flame</span></span>
+  </a>
+  
   <ul class="nav-links">
     <li><a href="{% url 'products' %}">Home</a></li>
-    <li><a href="{% url 'orders' %}"class="active">Orders</a></li>
-    <li><form method="post" action="{% url 'logout' %}" style="display:inline">{% csrf_token %}<button type="submit" style="background:none;border:0;color:inherit;font:inherit;cursor:pointer;">Logout</button></form></li>
+    <li><a href="{% url 'orders' %}" class="active">Orders</a></li>
   </ul>
-  <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="nav-logout" type="submit">Logout</button></form>
+  
+  <div class="nav-actions">
+    <div class="profile-dropdown">
+      <button class="nav-icon-btn" onclick="toggleProfileDropdown(event)" title="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <div class="profile-dropdown-content" id="profileDropdown">
+        <div class="profile-user-info">Hello, {{ user.username }}</div>
+        <a href="{% url 'products' %}">Shop Candles</a>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
+      </div>
+    </div>
+  </div>
 </nav>
+
+<form method="post" action="{% url 'logout' %}" id="logoutForm" style="display:none;">
+  {% csrf_token %}
+</form>
 
 <div class="page-header">
   <div class="page-header-inner">
@@ -157,15 +715,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-fi
   <div class="stats-inner">
     <div class="stat">
       <span class="stat-label">Total Orders</span>
-      <span class="stat-value">
-        {{ orders.count }}
-    </span>
+      <span class="stat-value">{{ orders.count }}</span>
     </div>
     <div class="stat">
       <span class="stat-label">Total Spent</span>
-      <span class="stat-value">
-        ₹{{ total_spent }}
-    </span>
+      <span class="stat-value">₹{{ total_spent }}</span>
     </div>
     <div class="stat">
       <span class="stat-label">Delivered</span>
@@ -189,92 +743,75 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.97);backdrop-fi
 
   <!-- ORDERS LIST -->
   <div class="orders-list">
-
-{% for order in orders %}
-<div class="order-card expanded" data-status="{{ order.status }}" data-order="{{ order.id }}">
-
-    <div class="order-head">
-
-        <div>
-            <div class="order-id">
-                Order <span>#{{ order.id }}</span>
-            </div>
-        </div>
-
-        <div class="order-meta">
-
+    {% for order in orders %}
+      <div class="order-card expanded" data-status="{{ order.status }}" data-order="{{ order.id }}">
+        <div class="order-head">
+          <div>
+            <div class="order-id">Order <span>#{{ order.id }}</span></div>
+          </div>
+          <div class="order-meta">
             <div class="order-meta-item">
-                <span class="order-meta-label">Date</span>
-                <span class="order-meta-value">
-                    {{ order.created_at }}
-                </span>
+              <span class="order-meta-label">Date</span>
+              <span class="order-meta-value">{{ order.created_at }}</span>
             </div>
-
             <div class="order-meta-item">
-                <span class="order-meta-label">Items</span>
-                <span class="order-meta-value">
-                    {{ order.items.count }} candles
-                </span>
+              <span class="order-meta-label">Items</span>
+              <span class="order-meta-value">{{ order.items.count }} candles</span>
             </div>
-
+          </div>
+          <span class="status-badge status-{{ order.status|lower }}"><span class="status-dot"></span>{{ order.status }}</span>
+          <span class="order-total">₹{{ order.total_price }}</span>
+          <span class="chevron">▼</span>
         </div>
-
-        <span class="status-badge status-{{ order.status|lower }}"><span class="status-dot"></span>{{ order.status }}</span>
-        <span class="order-total">₹{{ order.total_price }}</span>
-
-    </div>
-
-    <div class="order-body">
-
-        <div class="order-items">
-
+        
+        <div class="order-body">
+          <div class="order-items">
             {% for item in order.items.all %}
-            <div class="order-item">
-
-                <div class="order-item-icon">
-                    🕯️
-                </div>
-
+              <div class="order-item">
+                <div class="order-item-icon">🕯️</div>
                 <div class="order-item-info">
-                    <div class="order-item-name">
-                        {{ item.candle_name }}
-                    </div>
-
-                    <div class="order-item-qty">
-                        Qty: {{ item.quantity }}
-                    </div>
+                  <div class="order-item-name">{{ item.candle_name }}</div>
+                  <div class="order-item-qty">Qty: {{ item.quantity }}</div>
                 </div>
-
-            </div>
+              </div>
             {% endfor %}
-
+          </div>
         </div>
-
-    </div>
-
-</div>
-{% empty %}
-<div class="empty-state">
-    <div class="empty-icon">📦</div>
-    <h2 class="empty-title">No Orders Yet</h2>
-</div>
-{% endfor %}
-
-</div>
+      </div>
+    {% empty %}
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <h2 class="empty-title">No Orders Yet</h2>
+        <p class="empty-sub">Explore our collections and experience the scent story of Moonlight Flame.</p>
+        <a href="{% url 'products' %}" class="btn-shop">Shop Candles</a>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
 <div class="page-footer">
-  <span>© 2024 Moonlight Flame. All rights reserved.</span>
-  <a href="{% url 'products' %}"style="color:var(--gold)">← Back to Shop</a>
+  <span>© 2026 Moonlight Flame — All rights reserved.</span>
+  <a href="{% url 'products' %}" style="color:var(--color-gold)">← Back to Shop</a>
 </div>
 
 <div class="toast" id="toast"><span class="toast-icon">✦</span><span id="toastMsg"></span></div>
 
 <script>
-function toggleCard(id) {
-  const card = document.querySelector(`[data-order="${id}"]`);
-  if (card) card.classList.toggle('expanded');
+function toggleProfileDropdown(e) {
+  if (e) e.stopPropagation();
+  const dropdown = document.getElementById('profileDropdown');
+  if (dropdown) dropdown.classList.toggle('show');
 }
+
+// Close dropdown when clicking outside
+window.addEventListener('click', function(e) {
+  const dropdown = document.getElementById('profileDropdown');
+  if (dropdown && dropdown.classList.contains('show')) {
+    if (!e.target.closest('.profile-dropdown')) {
+      dropdown.classList.remove('show');
+    }
+  }
+});
 
 document.querySelectorAll('.order-head').forEach(head => {
   head.addEventListener('click', () => head.closest('.order-card').classList.toggle('expanded'));
