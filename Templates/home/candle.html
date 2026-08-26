@@ -3521,6 +3521,7 @@ footer {
   <span class="toast-icon">✦</span>
   <span id="toastMsg">Notification message</span>
 </div><script>
+const isAuthenticated = {{ user.is_authenticated|yesno:'true,false' }};
 const PRODUCTS = {{ products_json|safe }};
 
 let cart = [], wishlist = [], modalQty = 1, currentModalId = null, activeFilter = 'all';
@@ -3672,6 +3673,11 @@ async function apiRequest(url, options = {}) {
 }
 
 async function addToCart(id, qty = 1) {
+  if (!isAuthenticated) {
+    showToast('Please login first to add to cart. <a href="/accounts/login/" style="color:#C5A46D; text-decoration:underline; font-weight:600; margin-left:10px;">Login to continue</a>');
+    setTimeout(() => window.location.href = '/accounts/login/', 2500);
+    return;
+  }
   const data = await apiRequest(`/add-to-cart/${id}/`, { method: 'POST', body: JSON.stringify({ quantity: qty }) });
   if (!data) return;
   cart = data.cart_items;
@@ -4056,7 +4062,7 @@ function backToHome() {
 function showToast(msg) {
   const t = document.getElementById('toast');
   if (!t) return;
-  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toastMsg').innerHTML = msg;
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove('show'), 2800);
